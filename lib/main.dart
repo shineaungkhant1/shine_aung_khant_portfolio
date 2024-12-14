@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(MyApp());
@@ -99,7 +101,7 @@ class HeroSection extends StatelessWidget {
                   width: 130,
                   color: Colors.blueAccent,
                   child: Image.asset(
-                    'assets/profile_image.png', // Replace with your image
+                    'assets/profile/profile.jpeg',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -146,10 +148,18 @@ class HeroSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _SocialButton(icon: Icons.facebook),
-              _SocialButton(icon: Icons.facebook),
-              _SocialButton(icon: Icons.facebook),
-              _SocialButton(icon: Icons.facebook),
+              _SocialButton(
+                icon: FontAwesomeIcons.github,
+                url: 'https://github.com/shineaungkhant1',
+              ),
+              _SocialButton(
+                icon: FontAwesomeIcons.linkedin,
+                url: 'https://www.linkedin.com/in/shine-aung-khant-008b75255/',
+              ),
+              _SocialButton(
+                icon: Icons.email,
+                email: 'shineaungkhant1@gmail.com',
+              ),
             ],
           ),
           const SizedBox(height: 20),
@@ -197,21 +207,41 @@ class _NavBarItem extends StatelessWidget {
 
 class _SocialButton extends StatelessWidget {
   final IconData icon;
+  final String? url;
+  final String? email;
 
-  const _SocialButton({required this.icon});
+  const _SocialButton({required this.icon, this.url, this.email});
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {
-        // Add social media link logic
+      onPressed: () async {
+        if (url != null) {
+          // Launch URL for LinkedIn or GitHub
+          if (await canLaunch(url!)) {
+            await launch(url!);
+          } else {
+            throw 'Could not launch $url';
+          }
+        } else if (email != null) {
+          // Open Gmail in compose mode with prefilled recipient email
+          final String composeUrl =
+              'https://mail.google.com/mail/u/0/?view=cm&fs=1&to=$email';
+          if (await canLaunch(composeUrl)) {
+            await launch(composeUrl);
+          } else {
+            throw 'Could not launch $composeUrl';
+          }
+        }
       },
-      icon: Icon(icon),
+      icon: FaIcon(icon),
       color: Colors.cyanAccent,
       iconSize: 28,
     );
   }
 }
+
+
 
 class HexagonClipper extends CustomClipper<Path> {
   @override
@@ -233,213 +263,3 @@ class HexagonClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
-
-
-
-// import 'package:flutter/material.dart';
-//
-// void main() {
-//   runApp(MyPortfolio());
-// }
-//
-// class MyPortfolio extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData.dark(),
-//       home: PortfolioScreen(),
-//     );
-//   }
-// }
-//
-// class PortfolioScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: SingleChildScrollView(
-//         child: Container(
-//           decoration: BoxDecoration(
-//             gradient: LinearGradient(
-//               colors: [Colors.black, Colors.teal.shade900],
-//               begin: Alignment.topCenter,
-//               end: Alignment.bottomCenter,
-//             ),
-//           ),
-//           child: Column(
-//             children: [
-//               // Navigation Bar
-//               Padding(
-//                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-//                 child: Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     Text(
-//                       "Portfolio.",
-//                       style: TextStyle(
-//                         fontSize: 22,
-//                         fontWeight: FontWeight.bold,
-//                         color: Colors.white,
-//                       ),
-//                     ),
-//                     Row(
-//                       children: [
-//                         NavBarItem(title: "Home"),
-//                         NavBarItem(title: "About"),
-//                         NavBarItem(title: "Skills"),
-//                         NavBarItem(title: "Portfolio"),
-//                         NavBarItem(title: "Contact"),
-//                       ],
-//                     )
-//                   ],
-//                 ),
-//               ),
-//               // Main Content
-//               Padding(
-//                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       crossAxisAlignment: CrossAxisAlignment.center,
-//                       children: [
-//                         // Left Section
-//                         Expanded(
-//                           child: Column(
-//                             crossAxisAlignment: CrossAxisAlignment.start,
-//                             children: [
-//                               Text(
-//                                 "Hello, It's Me",
-//                                 style: TextStyle(
-//                                   fontSize: 24,
-//                                   color: Colors.white70,
-//                                 ),
-//                               ),
-//                               SizedBox(height: 10),
-//                               Text(
-//                                 "John Kendric",
-//                                 style: TextStyle(
-//                                   fontSize: 48,
-//                                   fontWeight: FontWeight.bold,
-//                                   color: Colors.white,
-//                                 ),
-//                               ),
-//                               Text(
-//                                 "And I'm a Frontend Developer",
-//                                 style: TextStyle(
-//                                   fontSize: 28,
-//                                   fontWeight: FontWeight.bold,
-//                                   color: Colors.tealAccent,
-//                                 ),
-//                               ),
-//                               SizedBox(height: 20),
-//                               Text(
-//                                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Posimus nulla sed saepe rerum, animi expedita.",
-//                                 style: TextStyle(
-//                                   fontSize: 16,
-//                                   color: Colors.white70,
-//                                 ),
-//                               ),
-//                               SizedBox(height: 20),
-//                               // Social Icons and Button
-//                               Row(
-//                                 children: [
-//                                   SocialIcon(icon: Icons.facebook),
-//                                   SocialIcon(icon: Icons.facebook),
-//                                   SocialIcon(icon: Icons.facebook),
-//                                   SocialIcon(icon: Icons.email),
-//                                 ],
-//                               ),
-//                               SizedBox(height: 20),
-//                               ElevatedButton(
-//                                 style: ElevatedButton.styleFrom(
-//                                   backgroundColor: Colors.tealAccent,
-//                                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-//                                   shape: RoundedRectangleBorder(
-//                                     borderRadius: BorderRadius.circular(8),
-//                                   ),
-//                                 ),
-//                                 onPressed: () {
-//                                   // Add your CV download logic here
-//                                 },
-//                                 child: Text(
-//                                   "Download CV",
-//                                   style: TextStyle(
-//                                     fontSize: 18,
-//                                     fontWeight: FontWeight.bold,
-//                                     color: Colors.black,
-//                                   ),
-//                                 ),
-//                               )
-//                             ],
-//                           ),
-//                         ),
-//                         // Right Section - Profile Image
-//                         Expanded(
-//                           child: Container(
-//                             alignment: Alignment.center,
-//                             child: Container(
-//                               decoration: BoxDecoration(
-//                                 shape: BoxShape.circle,
-//                                 gradient: RadialGradient(
-//                                   colors: [Colors.tealAccent, Colors.black],
-//                                   radius: 1.2,
-//                                 ),
-//                               ),
-//                               padding: EdgeInsets.all(6),
-//                               child: CircleAvatar(
-//                                 radius: 120,
-//                                 backgroundImage: AssetImage("assets/profile.jpg"), // Add your image in assets folder
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     )
-//                   ],
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// class NavBarItem extends StatelessWidget {
-//   final String title;
-//   const NavBarItem({required this.title});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 10),
-//       child: Text(
-//         title,
-//         style: TextStyle(
-//           fontSize: 16,
-//           color: Colors.white70,
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// class SocialIcon extends StatelessWidget {
-//   final IconData icon;
-//   const SocialIcon({required this.icon});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 8),
-//       child: Icon(
-//         icon,
-//         color: Colors.tealAccent,
-//         size: 28,
-//       ),
-//     );
-//   }
-// }
