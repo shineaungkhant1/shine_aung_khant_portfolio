@@ -92,12 +92,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "About Me",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold),
+                    Center(
+                      child: const Text(
+                        "About Me",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     const SizedBox(height: 10),
                     _buildAboutContent(),
@@ -166,13 +168,15 @@ class _PortfolioPageState extends State<PortfolioPage> {
   }
 
   Widget _buildAboutContent() {
-    return const Text(
-      "I'm Shine Aung Khant, a passionate Flutter developer with experience building high-performance "
-      "mobile applications. With a background in Network Communication and hands-on development experience, "
-      "I specialize in creating responsive, user-centric apps. My goal is to continue learning, innovating, "
-      "and contributing to the tech world.",
-      style: TextStyle(color: Colors.white70, fontSize: 16, height: 1.5),
-      textScaler: TextScaler.linear(1.5),
+    return Center(
+      child:  Text(
+        "I'm Shine Aung Khant, a passionate Flutter developer with experience building high-performance "
+        "mobile applications. With a background in Network Communication and hands-on development experience, "
+        "I specialize in creating responsive, user-centric apps. My goal is to continue learning, innovating, "
+        "and contributing to the tech world.",
+        style: TextStyle(color: Colors.white70, fontSize: 16, height: 1.5),
+        textScaler: TextScaler.linear(1.5),
+      ),
     );
   }
 
